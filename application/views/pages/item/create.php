@@ -32,6 +32,8 @@
             if (title.length <= 0 || des.length <= 0) {
                 e.preventDefault();
                 iziToast.warning({
+                    position: 'topCenter',
+                    displayMode: 2,
                     title: 'Please fill all input text',
                 });
             }

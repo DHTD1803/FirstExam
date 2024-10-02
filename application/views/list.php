@@ -59,15 +59,15 @@
 </div>
 
 <script>
-    window.onload = function () {
-        <?php if ($this->session->flashdata('success')) { ?>
-            iziToast.success({
-                title: '<?php echo $this->session->flashdata('success'); ?>',
-            });
-        <?php } elseif ($this->session->flashdata('warning')) {?>
-            iziToast.warning({
-                title: '<?php echo $this->session->flashdata('warning'); ?>',
-            });
-        <?php } ?>
-    }
+    <?php if ($this->session->flashdata('success')) { ?>
+        iziToast.success({
+            position: 'topCenter',
+            title: '<?php echo $this->session->flashdata('success'); ?>',
+        });
+    <?php } elseif ($this->session->flashdata('warning')) { ?>
+        iziToast.warning({
+            position: 'topCenter',
+            title: '<?php echo $this->session->flashdata('warning'); ?>',
+        });
+    <?php } ?>
 </script>
