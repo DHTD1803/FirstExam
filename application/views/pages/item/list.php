@@ -59,18 +59,20 @@
 </div>
 
 <script>
-    window.onload = function() {
+    window.onload = function () {
         <?php if ($this->session->flashdata('success')) { ?>
             iziToast.success({
+                position: 'topCenter',
                 title: '<?php echo $this->session->flashdata('success'); ?>',
             });
         <?php } elseif ($this->session->flashdata('warning')) { ?>
             iziToast.warning({
+                position: 'topCenter',
                 title: '<?php echo $this->session->flashdata('warning'); ?>',
             });
         <?php } ?>
 
-        $('.remove').on('click', function() {
+        $('.remove').on('click', function () {
             let item_id = $(this).closest('tr').data('item_id');
             $.ajax({
                 url: "<?php echo site_url('item/remove') ?>",
@@ -78,23 +80,25 @@
                 data: {
                     'id': item_id,
                 },
-                success: function(response) {
+                success: function (response) {
                     var response = JSON.parse(response);
                     if (response.status) {
                         iziToast.success({
+                            position: 'topCenter',
                             title: response.msg,
                         });
                     } else {
                         iziToast.warning({
+                            position: 'topCenter',
                             title: response.msg,
                         });
                     }
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location.reload();
                     }, 3000);
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error("An error occurred: " + error);
                 }
             })
