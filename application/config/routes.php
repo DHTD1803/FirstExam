@@ -51,7 +51,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'welcome';
 $route['item'] = 'item';
-$route['item/create'] = 'item/create';
+$route['item/create'] = 'item/new_item';
+$route['item/create_or_update'] = 'item/create_update_item';
+$route['item/remove'] = 'item/remove_item';
 
 
 $route['404_override'] = '';

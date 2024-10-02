@@ -32,22 +32,54 @@ class Item extends CI_Controller
 	public function index()
 	{
 		$data['table_data'] = $this->item_model->get_all_item();
-		$data['view'] = 'list';
+		$data['view'] = 'pages/item/list';
 		$data['header_title'] = 'List Item';
 		$this->load->view('index', $data);
 	}
 
-	public function create()
+	public function new_item()
 	{
+		$data['header_title'] = 'New Item';
+		$data['view'] = 'pages/item/create';
+		$this->load->view('index', $data);
+	}
+
+	public function create_update_item() {
 		$data = $this->input->post();
-		$data['description'] = htmlspecialchars($data['description']);
-		$result = $this->item_model->insert_new_item($data);
+
+		if (empty($data['description']) || empty($data['title'])) {
+			$this->session->set_flashdata('warning','Please fill full data');
+			return redirect('item');
+		}
+
+		if (!empty($data['id']) ) {
+			$data['title'] = htmlspecialchars($data['title']);
+			$data['description'] = htmlspecialchars($data['description']);
+			$id = $data['id'];
+			unset($data['id']);
+			$result = $this->item_model->update_item($data, $id);
+			$msg = 'Update item complete';
+		} else {
+			$data['title'] = htmlspecialchars($data['title']);
+			$data['description'] = htmlspecialchars($data['description']);
+			$result = $this->item_model->insert_item($data);
+			$msg = 'Add new item complete';
+		}
+
 		if ($result) {
-			$this->session->set_flashdata('success','Add new complete');
+			$this->session->set_flashdata('success', $msg);
 		} else {
 			$this->session->set_flashdata('warning','Something go wrong');
 		}
 
-		redirect('item');
+		return redirect('item');
+	}
+
+	public function remove_item() {
+		$data = $this->input->post();
+		$result = $this->item_model->destroy_item($data);
+		$result > 0 ? $msg = 'Remove success' : $msg = 'Something go wrong';
+		echo json_encode(['status' => $result, 'msg' => $msg]);
+		die();
 	}
 }

@@ -22,8 +22,20 @@ class Item_model extends CI_Model
         return $this->db->get("items")->result_array();
     }
 
-    public function insert_new_item($data) {
+    public function insert_item($data) {
         $this->db->insert("items", $data);
         return $this->db->insert_id();
+    }
+
+    public function update_item($data, $id) {
+        $this->db->where("id", $id);
+        $this->db->update("items", $data);
+        return $this->db->affected_rows();
+    }
+
+    public function destroy_item($data) {
+        $this->db->where('id', $data['id']);
+        $this->db->delete("items");
+        return $this->db->affected_rows();
     }
 }
